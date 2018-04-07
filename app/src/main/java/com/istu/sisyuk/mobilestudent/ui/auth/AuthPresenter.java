@@ -3,6 +3,7 @@ package com.istu.sisyuk.mobilestudent.ui.auth;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.istu.sisyuk.mobilestudent.MobileStudentApplication;
 import com.istu.sisyuk.mobilestudent.base.BaseRepository;
 import com.istu.sisyuk.mobilestudent.data.models.AuthResponse;
 import com.istu.sisyuk.mobilestudent.data.models.AuthUserParam;
@@ -31,7 +32,7 @@ public class AuthPresenter implements AuthContract.Presenter {
     public void signIn(String email, String login, String password) {
         SignInUserParam signInUserParam = new SignInUserParam(new SignInUserParam.User(email, login, password));
         view.showProgress(true);
-        repository.signIn(signInUserParam, new Callback<Object>() {
+        repository.signIn(new SignInUserParam.User(email, login, password), new Callback<Object>() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 view.showProgress(false);
@@ -74,7 +75,10 @@ public class AuthPresenter implements AuthContract.Presenter {
     }
 
     private void saveToken(String token) {
-        // TODO: 07.04.2018 shared preferences
+        MobileStudentApplication
+                .getComponent()
+                .getPreferenceHelper()
+                .setToken(token);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.istu.sisyuk.mobilestudent.data.api.ApiService;
 import com.istu.sisyuk.mobilestudent.data.api.HeaderInterceptor;
+import com.istu.sisyuk.mobilestudent.util.PreferenceHelper;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -42,7 +43,11 @@ public class MobileStudentApplication extends Application {
         private ApiService apiService;
         private Retrofit retrofit;
 
+        private PreferenceHelper preferenceHelper;
+
         private AppComponent() {
+            preferenceHelper = new PreferenceHelper(MobileStudentApplication.this);
+
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .addNetworkInterceptor(new HeaderInterceptor())
                     .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -57,6 +62,10 @@ public class MobileStudentApplication extends Application {
 
         public ApiService getApiService() {
             return apiService;
+        }
+
+        public PreferenceHelper getPreferenceHelper() {
+            return preferenceHelper;
         }
     }
 }

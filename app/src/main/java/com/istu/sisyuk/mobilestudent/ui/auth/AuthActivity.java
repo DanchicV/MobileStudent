@@ -1,8 +1,12 @@
 package com.istu.sisyuk.mobilestudent.ui.auth;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,14 +16,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.istu.sisyuk.mobilestudent.R;
-import com.istu.sisyuk.mobilestudent.ui.auth.AuthContract;
-import com.istu.sisyuk.mobilestudent.ui.auth.AuthPresenter;
+import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AuthActivity extends AppCompatActivity implements AuthContract.View {
+public class AuthActivity extends BaseActivity implements AuthContract.View {
 
     @BindView(R.id.login_progress)
     ProgressBar loginProgress;
@@ -35,6 +38,9 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
 
     @BindView(R.id.password_edit_text)
     EditText passwordEditText;
+
+    @BindView(R.id.password_input_layout)
+    TextInputLayout passwordInputLayout;
 
     @BindView(R.id.retry_password_edit_text)
     EditText retryPasswordEditText;
@@ -60,6 +66,11 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
     private AuthPresenter presenter;
     private boolean isSignIn;
 
+    public static void start(Context context) {
+        Intent intent = new Intent(context, AuthActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +80,34 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
         presenter = new AuthPresenter();
         presenter.setView(this);
         presenter.subscribe();
+
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                String password = passwordEditText.getText().toString();
+                if (actionId == EditorInfo.IME_ACTION_GO && TextUtils.isEmpty(password)) {
+                    passwordInputLayout.setErrorEnabled(true);
+                    passwordInputLayout.setError(getString(R.string.empty_passwords));
+                } else {
+                    passwordInputLayout.setErrorEnabled(false);
+                }
+                return true;
+            }
+        });
+        retryPasswordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                String password = passwordEditText.getText().toString();
+                String retryPassword = retryPasswordEditText.getText().toString();
+                if (actionId == EditorInfo.IME_ACTION_GO && !password.equals(retryPassword)) {
+                    retryPasswordInputLayout.setErrorEnabled(true);
+                    retryPasswordInputLayout.setError(getString(R.string.passwords_do_not_match));
+                } else {
+                    retryPasswordInputLayout.setErrorEnabled(false);
+                }
+                return true;
+            }
+        });
     }
 
     @OnClick(R.id.sign_in_button)
@@ -76,14 +115,23 @@ public class AuthActivity extends AppCompatActivity implements AuthContract.View
         String email = emailEditText.getText().toString();
         String login = loginEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        presenter.signIn(email, login, password);
+        String retryPassword = retryPasswordEditText.getText().toString();
+        if (!TextUtils.isEmpty(email)
+                && !TextUtils.isEmpty(login)
+                && !TextUtils.isEmpty(password)
+                && !passwordInputLayout.isErrorEnabled()
+                && !retryPasswordInputLayout.isErrorEnabled()) {
+            presenter.signIn(email, login, password);
+        }
     }
 
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
         String login = loginEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        presenter.login(login, password);
+        if (!TextUtils.isEmpty(login) && !TextUtils.isEmpty(password)) {
+            presenter.login(login, password);
+        }
     }
 
     @OnClick(R.id.auth_trigger)

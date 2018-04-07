@@ -14,8 +14,8 @@ public interface ApiService {
     String AUTHORIZATION = "api/authorization";
 
     @POST(REGISTRATION)
-    Call<Object> signIn(@Body SignInUserParam device);
+    Call<Object> signIn(@Body SignInUserParam.User user);
 
     @POST(AUTHORIZATION)
-    Call<AuthResponse> login(@Body AuthUserParam device);
+    Call<AuthResponse> login(@Body AuthUserParam user);
 }
