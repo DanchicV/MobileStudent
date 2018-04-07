@@ -119,6 +119,7 @@ public class AuthActivity extends BaseActivity implements AuthContract.View {
         if (!TextUtils.isEmpty(email)
                 && !TextUtils.isEmpty(login)
                 && !TextUtils.isEmpty(password)
+                && !TextUtils.isEmpty(retryPassword)
                 && !passwordInputLayout.isErrorEnabled()
                 && !retryPasswordInputLayout.isErrorEnabled()) {
             presenter.signIn(email, login, password);
