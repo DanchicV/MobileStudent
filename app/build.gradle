@@ -12,10 +12,10 @@ android {
     }
     buildTypes {
         debug{
-            buildConfigField "String", "API_URL", "\"http:e91275yg.beget.tech/\""
+            buildConfigField "String", "API_URL", "\"http:memdata.ru/\""
         }
         release {
-            buildConfigField "String", "API_URL", "\"http:e91275yg.beget.tech/\""
+            buildConfigField "String", "API_URL", "\"http:memdata.ru/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -37,7 +37,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.android.support:recyclerview-v7:27.1.0'
-    implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
     implementation 'com.google.code.gson:gson:2.8.1'
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'

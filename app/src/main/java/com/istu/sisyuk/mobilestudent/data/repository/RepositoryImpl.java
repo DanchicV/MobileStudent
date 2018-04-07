@@ -18,12 +18,12 @@ public class RepositoryImpl implements BaseRepository {
     }
 
     @Override
-    public void signIn(SignInUserParam.User signInUserParam, Callback<Object> callback) {
+    public void signIn(SignInUserParam.User signInUserParam, Callback<Void> callback) {
         apiService.signIn(signInUserParam).enqueue(callback);
     }
 
     @Override
-    public void login(AuthUserParam authUserParam, Callback<AuthResponse> callback) {
+    public void login(AuthUserParam.User authUserParam, Callback<AuthResponse> callback) {
         apiService.login(authUserParam).enqueue(callback);
     }
 }

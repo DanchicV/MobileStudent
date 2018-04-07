@@ -33,12 +33,13 @@ public class AuthPresenter implements AuthContract.Presenter {
     public void signIn(String email, String login, String password) {
         SignInUserParam signInUserParam = new SignInUserParam(new SignInUserParam.User(email, login, password));
         view.showProgress(true);
-        repository.signIn(new SignInUserParam.User(email, login, password), new Callback<Object>() {
+        repository.signIn(new SignInUserParam.User(email, login, password), new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 view.showProgress(false);
                 if (response.code() == 200) {
                     view.switchSignIn(false);
+                    return;
                 }
                 view.showError(R.string.sign_in_error);
             }
@@ -53,7 +54,7 @@ public class AuthPresenter implements AuthContract.Presenter {
 
     @Override
     public void login(String login, String password) {
-        AuthUserParam authUserParam = new AuthUserParam(new AuthUserParam.User(login, password));
+        AuthUserParam.User authUserParam = new AuthUserParam.User(login, password);
         view.showProgress(true);
         repository.login(authUserParam, new Callback<AuthResponse>() {
             @Override
@@ -62,8 +63,9 @@ public class AuthPresenter implements AuthContract.Presenter {
                 AuthResponse authResponse = response.body();
                 if (response.code() == 200
                         && authResponse != null
-                        && TextUtils.isEmpty(authResponse.getToken())) {
+                        && !TextUtils.isEmpty(authResponse.getToken())) {
                     saveToken(authResponse.getToken());
+                    return;
                 }
                 view.showError(R.string.login_error);
             }

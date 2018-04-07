@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.istu.sisyuk.mobilestudent.MobileStudentApplication;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 
@@ -71,6 +72,11 @@ public class AuthActivity extends BaseActivity implements AuthContract.View {
     public static void start(Context context) {
         Intent intent = new Intent(context, AuthActivity.class);
         context.startActivity(intent);
+
+        String token = MobileStudentApplication.getComponent().getPreferenceHelper().getToken();
+        if (!TextUtils.isEmpty(token)) {
+
+        }
     }
 
     @Override
