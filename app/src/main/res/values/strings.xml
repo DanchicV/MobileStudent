@@ -17,4 +17,8 @@
     <string name="empty_passwords">Пароли не совпадают</string>
     <string name="error_field_required">Это поле является обязательным</string>
     <string name="authorization">Авторизация</string>
+    <string name="warning">Внимание</string>
+    <string name="sign_in_error">Ошибка регистрации</string>
+    <string name="login_error">Ошибка авторизации</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
 </resources>

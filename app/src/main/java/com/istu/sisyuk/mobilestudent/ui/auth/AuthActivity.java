@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 
@@ -155,8 +157,18 @@ public class AuthActivity extends BaseActivity implements AuthContract.View {
     }
 
     @Override
-    public void showError(Throwable throwable) {
+    public void showError(String message) {
+        MaterialDialog materialDialog = new MaterialDialog.Builder(this)
+                .title(R.string.warning)
+                .content(message)
+                .positiveText(android.R.string.ok)
+                .show();
+        materialDialog.getActionButton(DialogAction.POSITIVE).requestFocus();
+    }
 
+    @Override
+    public void showError(int message) {
+        showError(getString(message));
     }
 
     @Override

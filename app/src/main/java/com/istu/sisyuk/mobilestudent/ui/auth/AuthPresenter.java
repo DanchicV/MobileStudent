@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.istu.sisyuk.mobilestudent.MobileStudentApplication;
+import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseRepository;
 import com.istu.sisyuk.mobilestudent.data.models.AuthResponse;
 import com.istu.sisyuk.mobilestudent.data.models.AuthUserParam;
@@ -39,12 +40,13 @@ public class AuthPresenter implements AuthContract.Presenter {
                 if (response.code() == 200) {
                     view.switchSignIn(false);
                 }
-                view.showError(new Exception());
+                view.showError(R.string.sign_in_error);
             }
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull Throwable t) {
                 view.showProgress(false);
+                view.showError(R.string.unknown_error);
             }
         });
     }
@@ -63,13 +65,13 @@ public class AuthPresenter implements AuthContract.Presenter {
                         && TextUtils.isEmpty(authResponse.getToken())) {
                     saveToken(authResponse.getToken());
                 }
-                view.showError(new Exception());
+                view.showError(R.string.login_error);
             }
 
             @Override
             public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
                 view.showProgress(false);
-                view.showError(t);
+                view.showError(R.string.unknown_error);
             }
         });
     }

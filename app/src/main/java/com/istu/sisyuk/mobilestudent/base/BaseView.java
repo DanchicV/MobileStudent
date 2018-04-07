@@ -6,5 +6,7 @@ public interface BaseView<T extends BasePresenter> {
 
     void showProgress(Boolean b);
 
-    void showError(Throwable throwable);
+    void showError(String message);
+
+    void showError(int message);
 }
