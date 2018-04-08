@@ -11,4 +11,6 @@ public interface BaseRepository {
     void signIn(SignInUserParam signInUserParam, Callback<Void> callback);
 
     void login(AuthUserParam authUserParam, Callback<AuthResponse> callback);
+
+    void profile(AuthUserParam authUserParam, Callback<Void> callback);
 }

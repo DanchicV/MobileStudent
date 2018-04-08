@@ -26,4 +26,9 @@ public class RepositoryImpl implements BaseRepository {
     public void login(AuthUserParam authUserParam, Callback<AuthResponse> callback) {
         apiService.login(authUserParam).enqueue(callback);
     }
+
+    @Override
+    public void profile(AuthUserParam authUserParam, Callback<Void> callback) {
+        apiService.profile(authUserParam).enqueue(callback);
+    }
 }

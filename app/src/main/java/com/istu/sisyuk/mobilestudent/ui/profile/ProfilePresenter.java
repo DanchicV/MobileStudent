@@ -28,25 +28,22 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         repository = new RepositoryImpl();
     }
 
-    public void login(String login, String password) {
+    public void profile(String login, String password) {
         AuthUserParam authUserParam = new AuthUserParam(login, password);
         view.showProgress(true);
-        repository.login(authUserParam, new Callback<AuthResponse>() {
+        repository.profile(authUserParam, new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 view.showProgress(false);
-                AuthResponse authResponse = response.body();
-                if (response.code() == 200
-                        && authResponse != null
-                        && !TextUtils.isEmpty(authResponse.getToken())) {
+                if (response.code() == 200) {
 
                     return;
                 }
-                view.showError(R.string.login_error);
+                view.showError(response.message());
             }
 
             @Override
-            public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call call, @NonNull Throwable t) {
                 view.showProgress(false);
                 view.showError(R.string.unknown_error);
             }
@@ -59,6 +56,30 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 .getComponent()
                 .getPreferenceHelper()
                 .getToken();
+    }
+
+    @Override
+    public void removeToken() {
+        MobileStudentApplication
+                .getComponent()
+                .getPreferenceHelper()
+                .setToken(null);
+    }
+
+    @Override
+    public String getLogin() {
+        return MobileStudentApplication
+                .getComponent()
+                .getPreferenceHelper()
+                .getLogin();
+    }
+
+    @Override
+    public void setLogin(String login) {
+        MobileStudentApplication
+                .getComponent()
+                .getPreferenceHelper()
+                .setLogin(login);
     }
 
     @Override

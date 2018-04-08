@@ -17,5 +17,11 @@ public class AuthContract {
         void signIn(String email, String login, String password);
 
         void login(String login, String password);
+
+        void saveToken(String token);
+
+        String getLogin();
+
+        void setLogin(String login);
     }
 }

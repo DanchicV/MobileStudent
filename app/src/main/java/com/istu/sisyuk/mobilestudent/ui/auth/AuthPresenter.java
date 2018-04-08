@@ -53,7 +53,7 @@ public class AuthPresenter implements AuthContract.Presenter {
     }
 
     @Override
-    public void login(String login, String password) {
+    public void login(final String login, String password) {
         AuthUserParam authUserParam = new AuthUserParam(login, password);
         view.showProgress(true);
         repository.login(authUserParam, new Callback<AuthResponse>() {
@@ -65,6 +65,7 @@ public class AuthPresenter implements AuthContract.Presenter {
                         && authResponse != null
                         && !TextUtils.isEmpty(authResponse.getToken())) {
                     saveToken(authResponse.getToken());
+                    setLogin(login);
                     view.loginSuccess();
                     return;
                 }
@@ -79,11 +80,28 @@ public class AuthPresenter implements AuthContract.Presenter {
         });
     }
 
-    private void saveToken(String token) {
+    @Override
+    public void saveToken(String token) {
         MobileStudentApplication
                 .getComponent()
                 .getPreferenceHelper()
                 .setToken(token);
+    }
+
+    @Override
+    public String getLogin() {
+        return MobileStudentApplication
+                .getComponent()
+                .getPreferenceHelper()
+                .getLogin();
+    }
+
+    @Override
+    public void setLogin(String login) {
+        MobileStudentApplication
+                .getComponent()
+                .getPreferenceHelper()
+                .setLogin(login);
     }
 
     @Override

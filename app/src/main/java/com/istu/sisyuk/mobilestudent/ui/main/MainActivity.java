@@ -14,8 +14,7 @@ import android.view.MenuItem;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
-import com.istu.sisyuk.mobilestudent.ui.profile.ProfileActivity;
-import com.istu.sisyuk.mobilestudent.ui.profile.ProfilePresenter;
+import com.istu.sisyuk.mobilestudent.ui.profile.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +61,8 @@ public class MainActivity extends BaseActivity
         if (TextUtils.isEmpty(token)) {
             AuthActivity.startClearTop(this);
         }
+
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override
@@ -76,7 +77,20 @@ public class MainActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.subscriptions:
+                setActionBarTitle(getString(R.string.subscriptions));
+                setActionBarIcon(R.drawable.ic_subscription);
+                break;
+            case R.id.profile:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
+                        .commit();
+                setActionBarTitle(getString(R.string.profile));
+                setActionBarIcon(R.drawable.ic_profile);
+                break;
+        }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
