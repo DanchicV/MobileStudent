@@ -29,7 +29,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     public void login(String login, String password) {
-        AuthUserParam.User authUserParam = new AuthUserParam.User(login, password);
+        AuthUserParam authUserParam = new AuthUserParam(login, password);
         view.showProgress(true);
         repository.login(authUserParam, new Callback<AuthResponse>() {
             @Override

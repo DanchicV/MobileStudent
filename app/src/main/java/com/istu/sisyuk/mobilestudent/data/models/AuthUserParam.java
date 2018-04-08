@@ -4,50 +4,39 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class AuthUserParam {
-
-    @SerializedName("user")
+    @SerializedName("login")
     @Expose
-    private User user;
+    private String login;
+    @SerializedName("password")
+    @Expose
+    private String password;
 
-    public AuthUserParam(User user) {
-        this.user = user;
+    public AuthUserParam(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
 
-    public static class User {
-        @SerializedName("login")
-        @Expose
-        private String login;
-        @SerializedName("password")
-        @Expose
-        private String password;
+    public String getLogin() {
+        return login;
+    }
 
-        public User(String login, String password) {
-            this.login = login;
-            this.password = password;
-        }
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-        public String getLogin() {
-            return login;
-        }
+    public String getPassword() {
+        return password;
+    }
 
-        public void setLogin(String login) {
-            this.login = login;
-        }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        @Override
-        public String toString() {
-            return "user{" +
-                    "login='" + login + '\'' +
-                    ", password='" + password + '\'' +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "user{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

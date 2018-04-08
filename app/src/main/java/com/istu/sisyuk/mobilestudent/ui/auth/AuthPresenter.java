@@ -31,9 +31,9 @@ public class AuthPresenter implements AuthContract.Presenter {
 
     @Override
     public void signIn(String email, String login, String password) {
-        SignInUserParam signInUserParam = new SignInUserParam(new SignInUserParam.User(email, login, password));
+        SignInUserParam signInUserParam = new SignInUserParam(email, login, password);
         view.showProgress(true);
-        repository.signIn(new SignInUserParam.User(email, login, password), new Callback<Void>() {
+        repository.signIn(new SignInUserParam(email, login, password), new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 view.showProgress(false);
@@ -54,7 +54,7 @@ public class AuthPresenter implements AuthContract.Presenter {
 
     @Override
     public void login(String login, String password) {
-        AuthUserParam.User authUserParam = new AuthUserParam.User(login, password);
+        AuthUserParam authUserParam = new AuthUserParam(login, password);
         view.showProgress(true);
         repository.login(authUserParam, new Callback<AuthResponse>() {
             @Override

@@ -8,7 +8,7 @@ import retrofit2.Callback;
 
 public interface BaseRepository {
 
-    void signIn(SignInUserParam.User signInUserParam, Callback<Void> callback);
+    void signIn(SignInUserParam signInUserParam, Callback<Void> callback);
 
-    void login(AuthUserParam.User authUserParam, Callback<AuthResponse> callback);
+    void login(AuthUserParam authUserParam, Callback<AuthResponse> callback);
 }
