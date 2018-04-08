@@ -4,64 +4,52 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class SignInUserParam {
-
-    @SerializedName("user")
+    @SerializedName("email")
     @Expose
-    private User user;
+    private String email;
+    @SerializedName("login")
+    @Expose
+    private String login;
+    @SerializedName("password")
+    @Expose
+    private String password;
 
-    public SignInUserParam(User user) {
-        this.user = user;
+    public SignInUserParam(String email, String login, String password) {
+        this.email = email;
+        this.login = login;
+        this.password = password;
     }
 
-    public static class User {
+    public String getEmail() {
+        return email;
+    }
 
-        @SerializedName("email")
-        @Expose
-        private String email;
-        @SerializedName("login")
-        @Expose
-        private String login;
-        @SerializedName("password")
-        @Expose
-        private String password;
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-        public User(String email, String login, String password) {
-            this.email = email;
-            this.login = login;
-            this.password = password;
-        }
+    public String getLogin() {
+        return login;
+    }
 
-        public String getEmail() {
-            return email;
-        }
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
+    public String getPassword() {
+        return password;
+    }
 
-        public String getLogin() {
-            return login;
-        }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-        public void setLogin(String login) {
-            this.login = login;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        @Override
-        public String toString() {
-            return "user{" +
-                    "email='" + email + '\'' +
-                    ", login='" + login + '\'' +
-                    ", password='" + password + '\'' +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "user{" +
+                "email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

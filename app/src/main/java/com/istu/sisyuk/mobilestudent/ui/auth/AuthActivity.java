@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -17,9 +18,9 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.istu.sisyuk.mobilestudent.MobileStudentApplication;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseActivity;
+import com.istu.sisyuk.mobilestudent.ui.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,16 +68,18 @@ public class AuthActivity extends BaseActivity implements AuthContract.View {
     ScrollView loginForm;
 
     private AuthPresenter presenter;
+    private ActionBar actionBar;
     private boolean isSignIn;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, AuthActivity.class);
         context.startActivity(intent);
+    }
 
-        String token = MobileStudentApplication.getComponent().getPreferenceHelper().getToken();
-        if (!TextUtils.isEmpty(token)) {
-
-        }
+    public static void startClearTop(Context context) {
+        Intent intent = new Intent(context, AuthActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        context.startActivity(intent);
     }
 
     @Override
@@ -116,6 +119,11 @@ public class AuthActivity extends BaseActivity implements AuthContract.View {
                 return true;
             }
         });
+
+        actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.action_login);
+        }
     }
 
     @OnClick(R.id.sign_in_button)
@@ -191,6 +199,14 @@ public class AuthActivity extends BaseActivity implements AuthContract.View {
         setViewVisible(emailInputLayout, isSignIn);
         setViewVisible(retryPasswordInputLayout, isSignIn);
         authTrigger.setText(isSignIn ? R.string.login_trigger : R.string.sign_in_trigger);
+        if (actionBar != null) {
+            actionBar.setTitle(isSignIn ? R.string.action_sign_in : R.string.action_login);
+        }
+    }
+
+    @Override
+    public void loginSuccess() {
+        MainActivity.startClearTop(this);
     }
 }
 

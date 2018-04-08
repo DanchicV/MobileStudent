@@ -1,4 +1,4 @@
-package com.istu.sisyuk.mobilestudent.ui.auth;
+package com.istu.sisyuk.mobilestudent.ui.profile;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -8,19 +8,18 @@ import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseRepository;
 import com.istu.sisyuk.mobilestudent.data.models.AuthResponse;
 import com.istu.sisyuk.mobilestudent.data.models.AuthUserParam;
-import com.istu.sisyuk.mobilestudent.data.models.SignInUserParam;
 import com.istu.sisyuk.mobilestudent.data.repository.RepositoryImpl;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AuthPresenter implements AuthContract.Presenter {
+public class ProfilePresenter implements ProfileContract.Presenter {
 
-    private AuthContract.View view;
+    private ProfileContract.View view;
     private BaseRepository repository;
 
-    public void setView(AuthContract.View view) {
+    public void setView(ProfileContract.View view) {
         this.view = view;
     }
 
@@ -29,30 +28,6 @@ public class AuthPresenter implements AuthContract.Presenter {
         repository = new RepositoryImpl();
     }
 
-    @Override
-    public void signIn(String email, String login, String password) {
-        SignInUserParam signInUserParam = new SignInUserParam(email, login, password);
-        view.showProgress(true);
-        repository.signIn(new SignInUserParam(email, login, password), new Callback<Void>() {
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) {
-                view.showProgress(false);
-                if (response.code() == 200) {
-                    view.switchSignIn(false);
-                    return;
-                }
-                view.showError(R.string.sign_in_error);
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull Throwable t) {
-                view.showProgress(false);
-                view.showError(R.string.unknown_error);
-            }
-        });
-    }
-
-    @Override
     public void login(String login, String password) {
         AuthUserParam authUserParam = new AuthUserParam(login, password);
         view.showProgress(true);
@@ -64,8 +39,7 @@ public class AuthPresenter implements AuthContract.Presenter {
                 if (response.code() == 200
                         && authResponse != null
                         && !TextUtils.isEmpty(authResponse.getToken())) {
-                    saveToken(authResponse.getToken());
-                    view.loginSuccess();
+
                     return;
                 }
                 view.showError(R.string.login_error);
@@ -79,11 +53,12 @@ public class AuthPresenter implements AuthContract.Presenter {
         });
     }
 
-    private void saveToken(String token) {
-        MobileStudentApplication
+    @Override
+    public String getToken() {
+        return MobileStudentApplication
                 .getComponent()
                 .getPreferenceHelper()
-                .setToken(token);
+                .getToken();
     }
 
     @Override

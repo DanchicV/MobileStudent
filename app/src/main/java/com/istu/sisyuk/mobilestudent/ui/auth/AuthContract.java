@@ -8,6 +8,8 @@ public class AuthContract {
     public interface View extends BaseView<AuthPresenter> {
 
         void switchSignIn(boolean isSignIn);
+
+        void loginSuccess();
     }
 
     public interface Presenter extends BasePresenter {
