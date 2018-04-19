@@ -3,7 +3,7 @@ package com.istu.sisyuk.mobilestudent.data.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SignInUserParam {
+public class EditUserParam {
 
     @SerializedName("email")
     @Expose
@@ -15,7 +15,7 @@ public class SignInUserParam {
     @Expose
     private String password;
 
-    public SignInUserParam(String email, String login, String password) {
+    public EditUserParam(String email, String login, String password) {
         this.email = email;
         this.login = login;
         this.password = password;

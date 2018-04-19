@@ -8,6 +8,7 @@ public class PreferenceHelper {
 
     private static final String KEY_TOKEN = "TOKEN";
     private static final String KEY_LOGIN = "LOGIN";
+    private static final String KEY_PASSWORD = "PASSWORD";
 
     private SharedPreferences preferences;
 
@@ -37,6 +38,18 @@ public class PreferenceHelper {
 
     public String getLogin() {
         return preferences.getString(KEY_LOGIN, null);
+    }
+
+    public void setPassword(String password) {
+        if (!TextUtils.isEmpty(password)) {
+            putString(KEY_PASSWORD, password);
+        } else {
+            remove(KEY_PASSWORD);
+        }
+    }
+
+    public String getPassword() {
+        return preferences.getString(KEY_PASSWORD, null);
     }
 
     private void putString(String key, String value) {

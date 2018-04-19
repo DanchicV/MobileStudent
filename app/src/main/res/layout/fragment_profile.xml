@@ -33,26 +33,6 @@
         android:textSize="@dimen/default_text_size"
         tools:text="Сисюк Евгений" />
 
-    <TextView
-        android:id="@+id/user_direction_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/user_name"
-        android:layout_marginTop="@dimen/margin_default"
-        android:text="@string/user_direction"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/default_text_size"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/user_direction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/user_direction_label"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/default_text_size"
-        tools:text="781-1" />
-
     <Button
         android:id="@+id/logout_button"
         android:layout_width="match_parent"

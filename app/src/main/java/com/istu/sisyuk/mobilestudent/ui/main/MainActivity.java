@@ -38,9 +38,9 @@ public class MainActivity extends BaseActivity
         context.startActivity(intent);
     }
 
-    public static void startClearTop(Context context) {
+    public static void startNewTask(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
 
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity
 
         String token = presenter.getToken();
         if (TextUtils.isEmpty(token)) {
-            AuthActivity.startClearTop(this);
+            AuthActivity.startNewTask(this);
         }
 
         onNavigationItemSelected(navigationView.getMenu().getItem(0));

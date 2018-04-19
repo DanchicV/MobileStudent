@@ -5,6 +5,7 @@ import com.istu.sisyuk.mobilestudent.base.BaseRepository;
 import com.istu.sisyuk.mobilestudent.data.api.ApiService;
 import com.istu.sisyuk.mobilestudent.data.models.AuthResponse;
 import com.istu.sisyuk.mobilestudent.data.models.AuthUserParam;
+import com.istu.sisyuk.mobilestudent.data.models.EditUserParam;
 import com.istu.sisyuk.mobilestudent.data.models.SignInUserParam;
 
 import retrofit2.Callback;
@@ -28,7 +29,7 @@ public class RepositoryImpl implements BaseRepository {
     }
 
     @Override
-    public void profile(AuthUserParam authUserParam, Callback<Void> callback) {
-        apiService.profile(authUserParam).enqueue(callback);
+    public void profile(String token, EditUserParam editUserParam, Callback<Void> callback) {
+        apiService.profile(token, editUserParam).enqueue(callback);
     }
 }

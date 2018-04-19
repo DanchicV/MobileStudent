@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseFragment;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
+import com.istu.sisyuk.mobilestudent.ui.edit_profile.EditProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,12 +33,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @BindView(R.id.user_name)
     TextView userName;
-
-    @BindView(R.id.user_direction_label)
-    TextView userDirectionLabel;
-
-    @BindView(R.id.user_direction)
-    TextView userDirection;
 
     @BindView(R.id.logout_button)
     Button logoutButton;
@@ -62,7 +57,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
         String token = presenter.getToken();
         if (TextUtils.isEmpty(token)) {
-            AuthActivity.startClearTop(getContext());
+            AuthActivity.startNewTask(getContext());
         }
     }
 
@@ -86,6 +81,15 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(isAdded() && item.getItemId() == R.id.edit) {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(android.R.id.content, EditProfileFragment.newInstance(), EditProfileFragment.class.getSimpleName())
+                    .addToBackStack(EditProfileFragment.class.getSimpleName())
+                    .commit();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -109,12 +113,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @Override
     public void showError(String message) {
-        MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
-                .title(R.string.warning)
-                .content(message)
-                .positiveText(android.R.string.ok)
-                .show();
-        materialDialog.getActionButton(DialogAction.POSITIVE).requestFocus();
+        if (isAdded()) {
+            MaterialDialog materialDialog = new MaterialDialog.Builder(getContext())
+                    .title(R.string.warning)
+                    .content(message)
+                    .positiveText(android.R.string.ok)
+                    .show();
+            materialDialog.getActionButton(DialogAction.POSITIVE).requestFocus();
+        }
     }
 
     @Override
@@ -131,6 +137,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @OnClick(R.id.logout_button)
     public void onViewClicked() {
         presenter.removeToken();
-        AuthActivity.startClearTop(getContext());
+        AuthActivity.startNewTask(getContext());
     }
 }
