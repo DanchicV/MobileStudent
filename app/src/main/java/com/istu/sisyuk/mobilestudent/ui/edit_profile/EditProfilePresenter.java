@@ -1,26 +1,23 @@
-package com.istu.sisyuk.mobilestudent.ui.auth;
+package com.istu.sisyuk.mobilestudent.ui.edit_profile;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.istu.sisyuk.mobilestudent.MobileStudentApplication;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseRepository;
-import com.istu.sisyuk.mobilestudent.data.models.AuthResponse;
-import com.istu.sisyuk.mobilestudent.data.models.AuthUserParam;
-import com.istu.sisyuk.mobilestudent.data.models.SignInUserParam;
+import com.istu.sisyuk.mobilestudent.data.models.EditUserParam;
 import com.istu.sisyuk.mobilestudent.data.repository.RepositoryImpl;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AuthPresenter implements AuthContract.Presenter {
+public class EditProfilePresenter implements EditProfileContract.Presenter {
 
-    private AuthContract.View view;
+    private EditProfileContract.View view;
     private BaseRepository repository;
 
-    public void setView(AuthContract.View view) {
+    public void setView(EditProfileContract.View view) {
         this.view = view;
     }
 
@@ -30,18 +27,20 @@ public class AuthPresenter implements AuthContract.Presenter {
     }
 
     @Override
-    public void signIn(String email, String login, String password) {
-        SignInUserParam signInUserParam = new SignInUserParam(email, login, password);
+    public void editProfile(String email, final String login, final String password) {
+        EditUserParam editUserParam = new EditUserParam(email, login, password);
         view.showProgress(true);
-        repository.signIn(new SignInUserParam(email, login, password), new Callback<Void>() {
+        repository.profile(getToken(), editUserParam, new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 view.showProgress(false);
                 if (response.code() == 200) {
-                    view.switchSignIn(false);
+                    setLogin(login);
+                    setPassword(password);
+                    view.profileChanged();
                     return;
                 }
-                view.showError(R.string.sign_in_error);
+                view.showError(response.message());
             }
 
             @Override
@@ -53,40 +52,19 @@ public class AuthPresenter implements AuthContract.Presenter {
     }
 
     @Override
-    public void login(final String login, final String password) {
-        AuthUserParam authUserParam = new AuthUserParam(login, password);
-        view.showProgress(true);
-        repository.login(authUserParam, new Callback<AuthResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
-                view.showProgress(false);
-                AuthResponse authResponse = response.body();
-                if (response.code() == 200
-                        && authResponse != null
-                        && !TextUtils.isEmpty(authResponse.getToken())) {
-                    saveToken(authResponse.getToken());
-                    setLogin(login);
-                    setPassword(password);
-                    view.loginSuccess();
-                    return;
-                }
-                view.showError(R.string.login_error);
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AuthResponse> call, @NonNull Throwable t) {
-                view.showProgress(false);
-                view.showError(R.string.unknown_error);
-            }
-        });
+    public String getToken() {
+        return MobileStudentApplication
+                .getComponent()
+                .getPreferenceHelper()
+                .getToken();
     }
 
     @Override
-    public void saveToken(String token) {
+    public void removeToken() {
         MobileStudentApplication
                 .getComponent()
                 .getPreferenceHelper()
-                .setToken(token);
+                .setToken(null);
     }
 
     @Override

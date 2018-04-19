@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class AuthUserParam {
+
     @SerializedName("login")
     @Expose
     private String login;
@@ -34,7 +35,7 @@ public class AuthUserParam {
 
     @Override
     public String toString() {
-        return "user{" +
+        return "{" +
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 '}';

@@ -14,8 +14,7 @@ import android.view.MenuItem;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
-import com.istu.sisyuk.mobilestudent.ui.profile.ProfileActivity;
-import com.istu.sisyuk.mobilestudent.ui.profile.ProfilePresenter;
+import com.istu.sisyuk.mobilestudent.ui.profile.ProfileFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,9 +38,9 @@ public class MainActivity extends BaseActivity
         context.startActivity(intent);
     }
 
-    public static void startClearTop(Context context) {
+    public static void startNewTask(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
 
@@ -60,8 +59,10 @@ public class MainActivity extends BaseActivity
 
         String token = presenter.getToken();
         if (TextUtils.isEmpty(token)) {
-            AuthActivity.startClearTop(this);
+            AuthActivity.startNewTask(this);
         }
+
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override
@@ -76,7 +77,20 @@ public class MainActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.subscriptions:
+                setActionBarTitle(getString(R.string.subscriptions));
+                setActionBarIcon(R.drawable.ic_subscription);
+                break;
+            case R.id.profile:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
+                        .commit();
+                setActionBarTitle(getString(R.string.profile));
+                setActionBarIcon(R.drawable.ic_profile);
+                break;
+        }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

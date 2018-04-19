@@ -31,4 +31,20 @@
     <string name="subscriptions">Подписки</string>
     <string name="profile">Профиль</string>
     <string name="menu">Меню</string>
+
+    <!-- Profile screen -->
+    <string name="user_name">Имя пользователя:</string>
+    <string name="user_direction">Направление:</string>
+    <string name="logout">Выйти</string>
+
+    <string name="edit">Редактировать</string>
+    <string name="add">Добавить</string>
+    <string name="cancel">Отмена</string>
+
+    <!-- Edit profile screen -->
+    <string name="editing">Редактирование</string>
+    <string name="hint_new_login">Новый логин</string>
+    <string name="hint_new_email">Новая почта</string>
+    <string name="hint_new_password">Новый пароль</string>
+    <string name="hint_new_retry_password">Повтрить новый пароль</string>
 </resources>

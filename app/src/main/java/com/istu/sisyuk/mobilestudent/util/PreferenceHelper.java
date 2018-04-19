@@ -7,6 +7,8 @@ import android.text.TextUtils;
 public class PreferenceHelper {
 
     private static final String KEY_TOKEN = "TOKEN";
+    private static final String KEY_LOGIN = "LOGIN";
+    private static final String KEY_PASSWORD = "PASSWORD";
 
     private SharedPreferences preferences;
 
@@ -24,6 +26,30 @@ public class PreferenceHelper {
 
     public String getToken() {
         return preferences.getString(KEY_TOKEN, null);
+    }
+
+    public void setLogin(String login) {
+        if (!TextUtils.isEmpty(login)) {
+            putString(KEY_LOGIN, login);
+        } else {
+            remove(KEY_LOGIN);
+        }
+    }
+
+    public String getLogin() {
+        return preferences.getString(KEY_LOGIN, null);
+    }
+
+    public void setPassword(String password) {
+        if (!TextUtils.isEmpty(password)) {
+            putString(KEY_PASSWORD, password);
+        } else {
+            remove(KEY_PASSWORD);
+        }
+    }
+
+    public String getPassword() {
+        return preferences.getString(KEY_PASSWORD, null);
     }
 
     private void putString(String key, String value) {

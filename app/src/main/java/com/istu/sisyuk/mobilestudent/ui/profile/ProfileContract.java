@@ -12,5 +12,11 @@ public class ProfileContract {
     public interface Presenter extends BasePresenter {
 
         String getToken();
+
+        void removeToken();
+
+        String getLogin();
+
+        void setLogin(String login);
     }
 }
