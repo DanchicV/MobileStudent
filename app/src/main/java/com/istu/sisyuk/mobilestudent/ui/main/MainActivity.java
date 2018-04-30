@@ -15,6 +15,7 @@ import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
 import com.istu.sisyuk.mobilestudent.ui.profile.ProfileFragment;
+import com.istu.sisyuk.mobilestudent.ui.subscriptions.SubscriptionsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +80,10 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.subscriptions:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, SubscriptionsFragment.newInstance(), SubscriptionsFragment.class.getSimpleName())
+                        .commit();
                 setActionBarTitle(getString(R.string.subscriptions));
                 setActionBarIcon(R.drawable.ic_subscription);
                 break;

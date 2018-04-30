@@ -10,17 +10,7 @@
     <string name="action_sign_in">Зарегистрироваться</string>
     <string name="sign_in_trigger"><u>Зарегистрироваться</u></string>
     <string name="login_trigger"><u>Войти</u></string>
-    <string name="error_invalid_email">Неверный адрес электронной почты</string>
-    <string name="error_invalid_password">Этот пароль слишком короткий</string>
-    <string name="error_incorrect_password">Неверный пароль</string>
-    <string name="passwords_do_not_match">Пароли не совпадают</string>
-    <string name="empty_passwords">Пароли не совпадают</string>
-    <string name="error_field_required">Это поле является обязательным</string>
     <string name="authorization">Авторизация</string>
-    <string name="warning">Внимание</string>
-    <string name="sign_in_error">Ошибка регистрации</string>
-    <string name="login_error">Ошибка авторизации</string>
-    <string name="unknown_error">Неизвестная ошибка</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -47,4 +37,17 @@
     <string name="hint_new_email">Новая почта</string>
     <string name="hint_new_password">Новый пароль</string>
     <string name="hint_new_retry_password">Повтрить новый пароль</string>
+
+    <!-- Error -->
+    <string name="warning">Внимание</string>
+    <string name="sign_in_error">Ошибка регистрации</string>
+    <string name="login_error">Ошибка авторизации</string>
+    <string name="error_invalid_email">Неверный адрес электронной почты</string>
+    <string name="error_invalid_password">Этот пароль слишком короткий</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="error_incorrect_password">Неверный пароль</string>
+    <string name="passwords_do_not_match">Пароли не совпадают</string>
+    <string name="empty_passwords">Поле пароля не должно быть пустым</string>
+    <string name="error_field_required">Это поле является обязательным</string>
+    <string name="error_load_subscriptions">Не удалось загрузить подписки</string>
 </resources>
