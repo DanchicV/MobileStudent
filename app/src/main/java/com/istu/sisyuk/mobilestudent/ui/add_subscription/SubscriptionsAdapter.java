@@ -1,4 +1,4 @@
-package com.istu.sisyuk.mobilestudent.ui.subscriptions;
+package com.istu.sisyuk.mobilestudent.ui.add_subscription;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.istu.sisyuk.mobilestudent.R;
-import com.istu.sisyuk.mobilestudent.data.models.Subscription;
+import com.istu.sisyuk.mobilestudent.data.models.Course;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddedSubscriptionsAdapter extends RecyclerView.Adapter<AddedSubscriptionsAdapter.ViewHolder> {
+public class SubscriptionsAdapter extends RecyclerView.Adapter<SubscriptionsAdapter.ViewHolder> {
 
-    private List<Subscription> subscriptions = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
 
     @NonNull
     @Override
@@ -30,16 +30,16 @@ public class AddedSubscriptionsAdapter extends RecyclerView.Adapter<AddedSubscri
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.onBind(subscriptions.get(position));
+        holder.onBind(courses.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return subscriptions.size();
+        return courses.size();
     }
 
-    public void setSubscriptions(List<Subscription> subscriptions) {
-        this.subscriptions = subscriptions;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
         notifyDataSetChanged();
     }
 
@@ -56,9 +56,9 @@ public class AddedSubscriptionsAdapter extends RecyclerView.Adapter<AddedSubscri
             ButterKnife.bind(this, view);
         }
 
-        private void onBind(Subscription subscription) {
-            courseName.setText(subscription.getName());
-            teacherName.setText(subscription.getTeacherName());
+        private void onBind(Course course) {
+            courseName.setText(course.getName());
+            teacherName.setText(course.getTeacherName());
         }
     }
 }

@@ -5,6 +5,7 @@ import com.istu.sisyuk.mobilestudent.base.BaseRepository;
 import com.istu.sisyuk.mobilestudent.data.api.ApiService;
 import com.istu.sisyuk.mobilestudent.data.models.AuthResponse;
 import com.istu.sisyuk.mobilestudent.data.models.AuthUserParam;
+import com.istu.sisyuk.mobilestudent.data.models.Course;
 import com.istu.sisyuk.mobilestudent.data.models.EditUserParam;
 import com.istu.sisyuk.mobilestudent.data.models.SignInUserParam;
 import com.istu.sisyuk.mobilestudent.data.models.Subscription;
@@ -39,5 +40,10 @@ public class RepositoryImpl implements BaseRepository {
     @Override
     public void subscriptions(String token, Callback<List<Subscription>> callback) {
         apiService.subscriptions(token).enqueue(callback);
+    }
+
+    @Override
+    public void courses(String token, Callback<List<Course>> callback) {
+        apiService.courses(token).enqueue(callback);
     }
 }

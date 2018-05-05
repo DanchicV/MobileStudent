@@ -1,4 +1,4 @@
-package com.istu.sisyuk.mobilestudent.ui.subscriptions;
+package com.istu.sisyuk.mobilestudent.ui.add_subscription;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,47 +9,57 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseFragment;
-import com.istu.sisyuk.mobilestudent.data.models.Subscription;
-import com.istu.sisyuk.mobilestudent.ui.add_subscription.AddSubscriptionFragment;
+import com.istu.sisyuk.mobilestudent.data.models.Course;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class SubscriptionsFragment extends BaseFragment implements SubscriptionsContract.View {
+public class AddSubscriptionFragment extends BaseFragment implements AddSubscriptionContract.View {
 
     @BindView(R.id.profile_progress)
     ProgressBar profileProgress;
 
-    @BindView(R.id.added_subscriptions_recycler_view)
-    RecyclerView addedSubscriptionsRecyclerView;
+    @BindView(R.id.subscriptions_recycler_view)
+    RecyclerView subscriptionsRecyclerView;
 
-    private AddedSubscriptionsAdapter adapter;
+    @BindView(R.id.courses_spinner)
+    Spinner coursesSpinner;
+
+    @BindView(R.id.teachers_spinner)
+    Spinner teachersSpinner;
+
+    private SubscriptionsAdapter adapter;
+    private ArrayAdapter courseAdapter;
+    private ArrayAdapter teacherAdapter;
 
     private Unbinder unbinder;
-    private SubscriptionsPresenter presenter;
+    private AddSubscriptionPresenter presenter;
 
-    public static SubscriptionsFragment newInstance() {
-        return new SubscriptionsFragment();
+    public static AddSubscriptionFragment newInstance() {
+        return new AddSubscriptionFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new SubscriptionsPresenter();
+        presenter = new AddSubscriptionPresenter();
         presenter.setView(this);
         presenter.subscribe();
 
@@ -58,7 +68,7 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
             AuthActivity.startNewTask(getContext());
         }
 
-        adapter = new AddedSubscriptionsAdapter();
+        adapter = new SubscriptionsAdapter();
     }
 
     @Nullable
@@ -66,7 +76,7 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subscriptions, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_subscription, container, false);
         unbinder = ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
         return view;
@@ -76,36 +86,48 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter.subscriptions();
+        presenter.courses();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        addedSubscriptionsRecyclerView.setLayoutManager(linearLayoutManager);
-        addedSubscriptionsRecyclerView.setAdapter(adapter);
+        subscriptionsRecyclerView.setLayoutManager(linearLayoutManager);
+        subscriptionsRecyclerView.setAdapter(adapter);
+
+        courseAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, new String[]{});
+        teacherAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, new String[]{});
+
+        coursesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        teachersSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
-        inflater.inflate(R.menu.activity_main_add, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (isAdded() && item.getItemId() == R.id.add) {
-            getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(android.R.id.content, AddSubscriptionFragment.newInstance(), AddSubscriptionFragment.class.getSimpleName())
-                    .addToBackStack(AddSubscriptionFragment.class.getSimpleName())
-                    .commit();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void setPresenter(SubscriptionsPresenter presenter) {
+    public void setPresenter(AddSubscriptionPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -138,7 +160,22 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
     }
 
     @Override
-    public void setData(List<Subscription> subscriptions) {
-        adapter.setSubscriptions(subscriptions);
+    public void setData(List<Course> courses) {
+        adapter.setCourses(courses);
+
+        List<String> names = new ArrayList<>();
+        List<String> teachers = new ArrayList<>();
+        for (Course course : courses) {
+            names.add(course.getName());
+            teachers.add(course.getTeacherName());
+        }
+        if (isAdded()) {
+            courseAdapter.clear();
+            courseAdapter.addAll(names);
+            courseAdapter.notifyDataSetChanged();
+            teacherAdapter.clear();
+            teacherAdapter.addAll(teachers);
+            teacherAdapter.notifyDataSetChanged();
+        }
     }
 }

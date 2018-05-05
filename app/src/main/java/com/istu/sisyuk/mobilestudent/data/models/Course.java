@@ -3,7 +3,9 @@ package com.istu.sisyuk.mobilestudent.data.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Subscription {
+import java.util.List;
+
+public class Course {
 
     @SerializedName("id")
     @Expose
@@ -16,6 +18,14 @@ public class Subscription {
     @SerializedName("teacherName")
     @Expose
     String teacherName;
+
+    @SerializedName("lectures")
+    @Expose
+    List<Material> lectures;
+
+    @SerializedName("materials")
+    @Expose
+    List<Material> materials;
 
     public long getId() {
         return id;
@@ -39,5 +49,21 @@ public class Subscription {
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+
+    public List<Material> getLectures() {
+        return lectures;
+    }
+
+    public void setLectures(List<Material> lectures) {
+        this.lectures = lectures;
+    }
+
+    public List<Material> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
     }
 }
