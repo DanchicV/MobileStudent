@@ -19,7 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseFragment;
 import com.istu.sisyuk.mobilestudent.data.models.Subscription;
-import com.istu.sisyuk.mobilestudent.ui.add_subscription.AddSubscriptionFragment;
+import com.istu.sisyuk.mobilestudent.ui.add_subscription.AllCoursesFragment;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
 
 import java.util.List;
@@ -96,8 +96,8 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .add(android.R.id.content, AddSubscriptionFragment.newInstance(), AddSubscriptionFragment.class.getSimpleName())
-                    .addToBackStack(AddSubscriptionFragment.class.getSimpleName())
+                    .add(android.R.id.content, AllCoursesFragment.newInstance(), AllCoursesFragment.class.getSimpleName())
+                    .addToBackStack(AllCoursesFragment.class.getSimpleName())
                     .commit();
             return true;
         }

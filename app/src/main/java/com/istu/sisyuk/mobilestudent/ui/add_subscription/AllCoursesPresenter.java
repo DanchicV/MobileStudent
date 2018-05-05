@@ -14,12 +14,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddSubscriptionPresenter implements AddSubscriptionContract.Presenter {
+public class AllCoursesPresenter implements AllCoursesContract.Presenter {
 
-    private AddSubscriptionContract.View view;
+    private AllCoursesContract.View view;
     private BaseRepository repository;
 
-    public void setView(AddSubscriptionContract.View view) {
+    public void setView(AllCoursesContract.View view) {
         this.view = view;
     }
 

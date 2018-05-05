@@ -6,11 +6,11 @@ import com.istu.sisyuk.mobilestudent.data.models.Course;
 
 import java.util.List;
 
-public class AddSubscriptionContract {
+public class AllCoursesContract {
 
-    public interface View extends BaseView<AddSubscriptionPresenter> {
+    public interface View extends BaseView<AllCoursesPresenter> {
 
-        void setData(List<Course> subscriptions);
+        void setData(List<Course> courses);
     }
 
     public interface Presenter extends BasePresenter {

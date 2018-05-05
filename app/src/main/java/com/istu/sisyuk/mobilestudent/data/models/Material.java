@@ -7,17 +7,17 @@ public class Material {
 
     @SerializedName("name")
     @Expose
-    long name;
+    String name;
 
     @SerializedName("link")
     @Expose
     String link;
 
-    public long getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(long name) {
+    public void setName(String name) {
         this.name = name;
     }
 

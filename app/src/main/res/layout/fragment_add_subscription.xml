@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
     <ProgressBar
         android:id="@+id/profile_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -13,6 +18,7 @@
         android:visibility="gone" />
 
     <ScrollView
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -32,6 +38,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_default"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_title"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:text="@string/courses"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/subscriptions_recycler_view"
