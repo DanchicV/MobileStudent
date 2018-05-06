@@ -14,7 +14,9 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -23,8 +25,12 @@ public interface ApiService {
     String PROFILE = "api/profile";
     String SUBSCRIPTION = "api/subscriptions";
     String COURSES = "api/courses";
+    String COURSE = "api/course";
     String SUBSCRIBE = "api/subscribe/{courseId}";
+    String UNSUBSCRIBE = "api/unsubscribe/{courseId}";
     String TOKEN = "X-Auth-key";
+    String QUERY_ID = "id";
+    String PATH_ID_COURSE = "courseId";
 
     @POST(REGISTRATION)
     Call<Void> signIn(@Body SignInUserParam user);
@@ -42,7 +48,15 @@ public interface ApiService {
     @GET(COURSES)
     Call<List<Course>> courses(@Header(TOKEN) String token);
 
-    @POST(SUBSCRIBE)
+    @GET(COURSE)
+    Call<List<Course>> course(@Header(TOKEN) String token,
+                        @Query(QUERY_ID) long courseId);
+
+    @PUT(SUBSCRIBE)
     Call<Void> subscribe(@Header(TOKEN) String token,
-                         @Path("courseId") long courseId);
+                         @Path(PATH_ID_COURSE) long courseId);
+
+    @PUT(UNSUBSCRIBE)
+    Call<Void> unsubscribe(@Header(TOKEN) String token,
+                         @Path(PATH_ID_COURSE) long courseId);
 }

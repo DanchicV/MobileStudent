@@ -27,6 +27,10 @@ public class Course {
     @Expose
     List<Material> materials;
 
+    @SerializedName("subscribed")
+    @Expose
+    boolean subscribed;
+
     public long getId() {
         return id;
     }
@@ -65,5 +69,13 @@ public class Course {
 
     public void setMaterials(List<Material> materials) {
         this.materials = materials;
+    }
+
+    public boolean isSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(boolean subscribed) {
+        this.subscribed = subscribed;
     }
 }

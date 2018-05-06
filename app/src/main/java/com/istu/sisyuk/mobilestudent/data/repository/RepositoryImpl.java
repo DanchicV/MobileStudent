@@ -46,4 +46,19 @@ public class RepositoryImpl implements BaseRepository {
     public void courses(String token, Callback<List<Course>> callback) {
         apiService.courses(token).enqueue(callback);
     }
+
+    @Override
+    public void course(String token, long courseId, Callback<List<Course>> callback) {
+        apiService.course(token, courseId).enqueue(callback);
+    }
+
+    @Override
+    public void subscribe(String token, long courseId, Callback<Void> callback) {
+        apiService.subscribe(token, courseId).enqueue(callback);
+    }
+
+    @Override
+    public void unsubscribe(String token, long courseId, Callback<Void> callback) {
+        apiService.unsubscribe(token, courseId).enqueue(callback);
+    }
 }

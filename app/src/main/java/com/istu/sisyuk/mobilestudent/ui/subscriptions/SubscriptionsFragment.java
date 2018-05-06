@@ -19,7 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseFragment;
 import com.istu.sisyuk.mobilestudent.data.models.Subscription;
-import com.istu.sisyuk.mobilestudent.ui.add_subscription.AllCoursesFragment;
+import com.istu.sisyuk.mobilestudent.ui.all_courses.AllCoursesFragment;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
 
 import java.util.List;
@@ -76,8 +76,6 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter.subscriptions();
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         addedSubscriptionsRecyclerView.setLayoutManager(linearLayoutManager);
         addedSubscriptionsRecyclerView.setAdapter(adapter);
@@ -91,11 +89,19 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.subscriptions();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (isAdded() && item.getItemId() == R.id.add) {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
+                    .remove(this)
                     .add(android.R.id.content, AllCoursesFragment.newInstance(), AllCoursesFragment.class.getSimpleName())
                     .addToBackStack(AllCoursesFragment.class.getSimpleName())
                     .commit();

@@ -1,4 +1,4 @@
-package com.istu.sisyuk.mobilestudent.ui.add_subscription;
+package com.istu.sisyuk.mobilestudent.ui.all_courses;
 
 import android.support.annotation.NonNull;
 

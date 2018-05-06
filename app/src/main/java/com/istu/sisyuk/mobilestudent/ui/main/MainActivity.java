@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity
             case R.id.subscriptions:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container, SubscriptionsFragment.newInstance(), SubscriptionsFragment.class.getSimpleName())
+                        .replace(R.id.container, SubscriptionsFragment.newInstance(), SubscriptionsFragment.class.getSimpleName())
                         .commit();
                 setActionBarTitle(getString(R.string.subscriptions));
                 setActionBarIcon(R.drawable.ic_subscription);
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity
             case R.id.profile:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
+                        .replace(R.id.container, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
                         .commit();
                 setActionBarTitle(getString(R.string.profile));
                 setActionBarIcon(R.drawable.ic_profile);

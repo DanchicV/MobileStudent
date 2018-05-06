@@ -1,4 +1,4 @@
-package com.istu.sisyuk.mobilestudent.ui.add_subscription;
+package com.istu.sisyuk.mobilestudent.ui.all_courses;
 
 import com.istu.sisyuk.mobilestudent.base.BasePresenter;
 import com.istu.sisyuk.mobilestudent.base.BaseView;

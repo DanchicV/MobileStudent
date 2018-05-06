@@ -1,4 +1,4 @@
-package com.istu.sisyuk.mobilestudent.ui.add_subscription;
+package com.istu.sisyuk.mobilestudent.ui.course_info;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.istu.sisyuk.mobilestudent.R;
-import com.istu.sisyuk.mobilestudent.data.models.Course;
+import com.istu.sisyuk.mobilestudent.data.models.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,49 +16,46 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SubscriptionsAdapter extends RecyclerView.Adapter<SubscriptionsAdapter.ViewHolder> {
+public class CourseInfoAdapter extends RecyclerView.Adapter<CourseInfoAdapter.ViewHolder> {
 
-    private List<Course> courses = new ArrayList<>();
+    private List<Material> materials = new ArrayList<>();
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.added_subscriptions_item, parent, false);
+                .inflate(R.layout.course_info_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.onBind(courses.get(position));
+        holder.onBind(materials.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return courses.size();
+        return materials.size();
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
         notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.course_name)
-        TextView courseName;
 
-        @BindView(R.id.teacher_name)
-        TextView teacherName;
+        @BindView(R.id.info_name_text_view)
+        TextView infoName;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
-        private void onBind(Course course) {
-            courseName.setText(course.getName());
-            teacherName.setText(course.getTeacherName());
+        private void onBind(Material material) {
+            infoName.setText(material.getName());
         }
     }
 }

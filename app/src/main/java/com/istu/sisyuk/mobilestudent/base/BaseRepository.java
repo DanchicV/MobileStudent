@@ -22,4 +22,10 @@ public interface BaseRepository {
     void subscriptions(String token, Callback<List<Subscription>> callback);
 
     void courses(String token, Callback<List<Course>> callback);
+
+    void course(String token, long courseId, Callback<List<Course>> callback);
+
+    void subscribe(String token, long courseId, Callback<Void> callback);
+
+    void unsubscribe(String token, long courseId, Callback<Void> callback);
 }

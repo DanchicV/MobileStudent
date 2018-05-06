@@ -1,4 +1,4 @@
-package com.istu.sisyuk.mobilestudent.ui.add_subscription;
+package com.istu.sisyuk.mobilestudent.ui.all_courses;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,8 +24,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseFragment;
+import com.istu.sisyuk.mobilestudent.base.ItemCourseClickListener;
 import com.istu.sisyuk.mobilestudent.data.models.Course;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
+import com.istu.sisyuk.mobilestudent.ui.course_info.CourseInfoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +55,7 @@ public class AllCoursesFragment extends BaseFragment implements AllCoursesContra
 
     private List<Course> allCourses = new ArrayList<>();
     private List<Course> currentCourses = new ArrayList<>();
-    private SubscriptionsAdapter adapter;
+    private AllCoursesAdapter adapter;
     private ArrayAdapter courseAdapter;
     private ArrayAdapter teacherAdapter;
     private Unbinder unbinder;
@@ -76,7 +78,19 @@ public class AllCoursesFragment extends BaseFragment implements AllCoursesContra
             AuthActivity.startNewTask(getContext());
         }
 
-        adapter = new SubscriptionsAdapter();
+        adapter = new AllCoursesAdapter(new ItemCourseClickListener() {
+            @Override
+            public void onClick(long courseId) {
+                if(isAdded()) {
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(android.R.id.content, CourseInfoFragment.newInstance(courseId), CourseInfoFragment.class.getSimpleName())
+                            .addToBackStack(CourseInfoFragment.class.getSimpleName())
+                            .commit();
+                }
+            }
+        });
     }
 
     @Nullable
@@ -84,7 +98,7 @@ public class AllCoursesFragment extends BaseFragment implements AllCoursesContra
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_subscription, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_courses, container, false);
         unbinder = ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
         return view;
