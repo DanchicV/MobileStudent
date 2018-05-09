@@ -15,6 +15,7 @@ import com.istu.sisyuk.mobilestudent.R;
 import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
 import com.istu.sisyuk.mobilestudent.ui.profile.ProfileFragment;
+import com.istu.sisyuk.mobilestudent.ui.subscriptions.SubscriptionsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,9 +28,6 @@ public class MainActivity extends BaseActivity
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     private MainPresenter presenter;
 
@@ -50,7 +48,6 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
         navigationView.setNavigationItemSelectedListener(this);
 
         presenter = new MainPresenter();
@@ -79,16 +76,16 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.subscriptions:
-                setActionBarTitle(getString(R.string.subscriptions));
-                setActionBarIcon(R.drawable.ic_subscription);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, SubscriptionsFragment.newInstance(), SubscriptionsFragment.class.getSimpleName())
+                        .commit();
                 break;
             case R.id.profile:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
+                        .replace(R.id.container, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
                         .commit();
-                setActionBarTitle(getString(R.string.profile));
-                setActionBarIcon(R.drawable.ic_profile);
                 break;
         }
 

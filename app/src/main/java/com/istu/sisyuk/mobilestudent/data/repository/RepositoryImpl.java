@@ -5,8 +5,12 @@ import com.istu.sisyuk.mobilestudent.base.BaseRepository;
 import com.istu.sisyuk.mobilestudent.data.api.ApiService;
 import com.istu.sisyuk.mobilestudent.data.models.AuthResponse;
 import com.istu.sisyuk.mobilestudent.data.models.AuthUserParam;
+import com.istu.sisyuk.mobilestudent.data.models.Course;
 import com.istu.sisyuk.mobilestudent.data.models.EditUserParam;
 import com.istu.sisyuk.mobilestudent.data.models.SignInUserParam;
+import com.istu.sisyuk.mobilestudent.data.models.Subscription;
+
+import java.util.List;
 
 import retrofit2.Callback;
 
@@ -31,5 +35,30 @@ public class RepositoryImpl implements BaseRepository {
     @Override
     public void profile(String token, EditUserParam editUserParam, Callback<Void> callback) {
         apiService.profile(token, editUserParam).enqueue(callback);
+    }
+
+    @Override
+    public void subscriptions(String token, Callback<List<Subscription>> callback) {
+        apiService.subscriptions(token).enqueue(callback);
+    }
+
+    @Override
+    public void courses(String token, Callback<List<Course>> callback) {
+        apiService.courses(token).enqueue(callback);
+    }
+
+    @Override
+    public void course(String token, long courseId, Callback<List<Course>> callback) {
+        apiService.course(token, courseId).enqueue(callback);
+    }
+
+    @Override
+    public void subscribe(String token, long courseId, Callback<Void> callback) {
+        apiService.subscribe(token, courseId).enqueue(callback);
+    }
+
+    @Override
+    public void unsubscribe(String token, long courseId, Callback<Void> callback) {
+        apiService.unsubscribe(token, courseId).enqueue(callback);
     }
 }
