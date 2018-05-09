@@ -31,6 +31,7 @@
     <string name="add">Добавить</string>
     <string name="cancel">Отмена</string>
     <string name="courses">Курсы</string>
+    <string name="course">Курс</string>
     <string name="materials">Дополнительные материалы</string>
     <string name="lectures">Лекции</string>
     <string name="all">Все</string>

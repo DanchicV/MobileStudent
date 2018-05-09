@@ -92,6 +92,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
+                    .remove(this)
                     .add(android.R.id.content, EditProfileFragment.newInstance(), EditProfileFragment.class.getSimpleName())
                     .addToBackStack(EditProfileFragment.class.getSimpleName())
                     .commit();

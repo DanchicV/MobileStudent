@@ -80,6 +80,7 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
                     getActivity()
                             .getSupportFragmentManager()
                             .beginTransaction()
+                            .remove(SubscriptionsFragment.this)
                             .add(android.R.id.content, CourseInfoFragment.newInstance(courseId), CourseInfoFragment.class.getSimpleName())
                             .addToBackStack(CourseInfoFragment.class.getSimpleName())
                             .commit();
