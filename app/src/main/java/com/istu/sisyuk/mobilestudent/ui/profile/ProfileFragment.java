@@ -1,8 +1,11 @@
 package com.istu.sisyuk.mobilestudent.ui.profile;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
+import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 import com.istu.sisyuk.mobilestudent.base.BaseFragment;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
 import com.istu.sisyuk.mobilestudent.ui.edit_profile.EditProfileFragment;
@@ -39,6 +43,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @BindView(R.id.profile_progress)
     ProgressBar profileProgress;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private Unbinder unbinder;
     private ProfilePresenter presenter;
@@ -81,7 +88,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(isAdded() && item.getItemId() == R.id.edit) {
+        if (isAdded() && item.getItemId() == R.id.edit) {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
@@ -96,6 +103,13 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Activity activity = getActivity();
+        if (activity instanceof AppCompatActivity) {
+            ((AppCompatActivity) activity).setSupportActionBar(toolbar);
+            ((BaseActivity) activity).setActionBarIcon(R.drawable.ic_profile);
+            ((BaseActivity) activity).setActionBarTitle(getString(R.string.profile));
+        }
 
         String login = presenter.getLogin();
         userName.setText(login);

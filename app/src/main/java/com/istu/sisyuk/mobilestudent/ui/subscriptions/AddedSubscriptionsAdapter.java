@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.istu.sisyuk.mobilestudent.R;
+import com.istu.sisyuk.mobilestudent.base.ItemCourseClickListener;
 import com.istu.sisyuk.mobilestudent.data.models.Subscription;
 
 import java.util.ArrayList;
@@ -19,6 +20,11 @@ import butterknife.ButterKnife;
 public class AddedSubscriptionsAdapter extends RecyclerView.Adapter<AddedSubscriptionsAdapter.ViewHolder> {
 
     private List<Subscription> subscriptions = new ArrayList<>();
+    private ItemCourseClickListener courseClickListener;
+
+    public AddedSubscriptionsAdapter(ItemCourseClickListener courseClickListener) {
+        this.courseClickListener = courseClickListener;
+    }
 
     @NonNull
     @Override
@@ -30,7 +36,7 @@ public class AddedSubscriptionsAdapter extends RecyclerView.Adapter<AddedSubscri
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.onBind(subscriptions.get(position));
+        holder.onBind(subscriptions.get(position), courseClickListener);
     }
 
     @Override
@@ -56,9 +62,15 @@ public class AddedSubscriptionsAdapter extends RecyclerView.Adapter<AddedSubscri
             ButterKnife.bind(this, view);
         }
 
-        private void onBind(Subscription subscription) {
+        private void onBind(final Subscription subscription, final ItemCourseClickListener clickListener) {
             courseName.setText(subscription.getName());
             teacherName.setText(subscription.getTeacherName());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onClick(subscription.getId());
+                }
+            });
         }
     }
 }

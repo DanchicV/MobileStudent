@@ -1,10 +1,13 @@
 package com.istu.sisyuk.mobilestudent.ui.subscriptions;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,10 +20,13 @@ import android.widget.ProgressBar;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.istu.sisyuk.mobilestudent.R;
+import com.istu.sisyuk.mobilestudent.base.BaseActivity;
 import com.istu.sisyuk.mobilestudent.base.BaseFragment;
+import com.istu.sisyuk.mobilestudent.base.ItemCourseClickListener;
 import com.istu.sisyuk.mobilestudent.data.models.Subscription;
 import com.istu.sisyuk.mobilestudent.ui.all_courses.AllCoursesFragment;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
+import com.istu.sisyuk.mobilestudent.ui.course_info.CourseInfoFragment;
 
 import java.util.List;
 
@@ -35,6 +41,9 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
 
     @BindView(R.id.added_subscriptions_recycler_view)
     RecyclerView addedSubscriptionsRecyclerView;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private AddedSubscriptionsAdapter adapter;
 
@@ -58,7 +67,19 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
             AuthActivity.startNewTask(getContext());
         }
 
-        adapter = new AddedSubscriptionsAdapter();
+        adapter = new AddedSubscriptionsAdapter(new ItemCourseClickListener() {
+            @Override
+            public void onClick(long courseId) {
+                if (isAdded()) {
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(android.R.id.content, CourseInfoFragment.newInstance(courseId), CourseInfoFragment.class.getSimpleName())
+                            .addToBackStack(CourseInfoFragment.class.getSimpleName())
+                            .commit();
+                }
+            }
+        });
     }
 
     @Nullable
@@ -75,6 +96,13 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Activity activity = getActivity();
+        if (activity instanceof AppCompatActivity) {
+            ((AppCompatActivity) activity).setSupportActionBar(toolbar);
+            ((BaseActivity) activity).setActionBarIcon(R.drawable.ic_subscription);
+            ((BaseActivity) activity).setActionBarTitle(getString(R.string.subscriptions));
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         addedSubscriptionsRecyclerView.setLayoutManager(linearLayoutManager);

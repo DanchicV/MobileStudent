@@ -29,9 +29,6 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     private MainPresenter presenter;
 
     public static void start(Context context) {
@@ -51,7 +48,6 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
         navigationView.setNavigationItemSelectedListener(this);
 
         presenter = new MainPresenter();
@@ -84,16 +80,12 @@ public class MainActivity extends BaseActivity
                         .beginTransaction()
                         .replace(R.id.container, SubscriptionsFragment.newInstance(), SubscriptionsFragment.class.getSimpleName())
                         .commit();
-                setActionBarTitle(getString(R.string.subscriptions));
-                setActionBarIcon(R.drawable.ic_subscription);
                 break;
             case R.id.profile:
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.container, ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName())
                         .commit();
-                setActionBarTitle(getString(R.string.profile));
-                setActionBarIcon(R.drawable.ic_profile);
                 break;
         }
 
