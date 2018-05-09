@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -28,6 +29,7 @@ import com.istu.sisyuk.mobilestudent.ui.all_courses.AllCoursesFragment;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
 import com.istu.sisyuk.mobilestudent.ui.course_info.CourseInfoFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,10 +47,14 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.search_view)
+    SearchView searchView;
+
     private AddedSubscriptionsAdapter adapter;
 
     private Unbinder unbinder;
     private SubscriptionsPresenter presenter;
+    private List<Subscription> subscriptions;
 
     public static SubscriptionsFragment newInstance() {
         return new SubscriptionsFragment();
@@ -107,6 +113,37 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         addedSubscriptionsRecyclerView.setLayoutManager(linearLayoutManager);
         addedSubscriptionsRecyclerView.setAdapter(adapter);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return searchCourse(query);
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return searchCourse(newText);
+            }
+        });
+    }
+
+    private boolean searchCourse(String query) {
+        if (TextUtils.isEmpty(query)) {
+            adapter.setSubscriptions(subscriptions);
+            return false;
+        }
+        query = query.toLowerCase();
+        List<Subscription> foundSubscriptions = new ArrayList<>();
+        for (Subscription subscription : subscriptions) {
+            String name = subscription.getName();
+            String teacherName = subscription.getTeacherName();
+            if ((!TextUtils.isEmpty(name) && name.toLowerCase().contains(query))
+                    || (!TextUtils.isEmpty(teacherName) && teacherName.toLowerCase().contains(query))) {
+                foundSubscriptions.add(subscription);
+            }
+        }
+        adapter.setSubscriptions(foundSubscriptions);
+        return !foundSubscriptions.isEmpty();
     }
 
     @Override
@@ -173,6 +210,12 @@ public class SubscriptionsFragment extends BaseFragment implements Subscriptions
 
     @Override
     public void setData(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
         adapter.setSubscriptions(subscriptions);
+        if (!subscriptions.isEmpty()) {
+            searchView.setVisibility(View.VISIBLE);
+        } else {
+            searchView.setVisibility(View.GONE);
+        }
     }
 }

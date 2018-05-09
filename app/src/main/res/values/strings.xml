@@ -58,4 +58,6 @@
 
     <string name="subscribe">Подписаться</string>
     <string name="unsubscribe">Отписаться</string>
+
+    <string name="search_by_subscriptions">Поиск по подпискам</string>
 </resources>

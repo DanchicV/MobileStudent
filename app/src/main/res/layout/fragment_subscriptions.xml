@@ -9,6 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
+    <SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_default"
+        android:background="@drawable/bg_item"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/search_by_subscriptions"
+        android:padding="8dp"
+        android:visibility="gone" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
