@@ -27,6 +27,7 @@ import com.istu.sisyuk.mobilestudent.base.BaseFragment;
 import com.istu.sisyuk.mobilestudent.data.models.Course;
 import com.istu.sisyuk.mobilestudent.data.models.Material;
 import com.istu.sisyuk.mobilestudent.ui.auth.AuthActivity;
+import com.istu.sisyuk.mobilestudent.ui.doc_view.DocViewActivity;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class CourseInfoFragment extends BaseFragment implements CourseInfoContract.View {
+public class CourseInfoFragment extends BaseFragment implements CourseInfoContract.View, CourseInfoAdapter.MaterialItemClickListener {
 
     private static final String KEY_COURSE_ID = "COURSE_ID";
 
@@ -90,8 +91,8 @@ public class CourseInfoFragment extends BaseFragment implements CourseInfoContra
             AuthActivity.startNewTask(getContext());
         }
 
-        materialsAdapter = new CourseInfoAdapter();
-        lecturesAdapter = new CourseInfoAdapter();
+        materialsAdapter = new CourseInfoAdapter(this);
+        lecturesAdapter = new CourseInfoAdapter(this);
 
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -124,7 +125,7 @@ public class CourseInfoFragment extends BaseFragment implements CourseInfoContra
                 actionBar.setHomeButtonEnabled(true);
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
-            toolbar.setTitle(R.string.add);
+            toolbar.setTitle(R.string.course);
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -186,6 +187,7 @@ public class CourseInfoFragment extends BaseFragment implements CourseInfoContra
 
     @Override
     public void setData(Course course) {
+        toolbar.setTitle(course.getName());
         List<Material> materials = course.getMaterials();
         List<Material> lectures = course.getLectures();
 
@@ -237,5 +239,10 @@ public class CourseInfoFragment extends BaseFragment implements CourseInfoContra
     @OnClick(R.id.unsubscribe_button)
     public void unsubscribeClicked() {
         presenter.unsubscribeToCourse(courseId);
+    }
+
+    @Override
+    public void onClick(Material material) {
+        DocViewActivity.start(getContext(), material);
     }
 }

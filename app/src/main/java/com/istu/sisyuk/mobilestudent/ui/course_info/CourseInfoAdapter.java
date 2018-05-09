@@ -19,6 +19,11 @@ import butterknife.ButterKnife;
 public class CourseInfoAdapter extends RecyclerView.Adapter<CourseInfoAdapter.ViewHolder> {
 
     private List<Material> materials = new ArrayList<>();
+    private MaterialItemClickListener materialItemClickListener;
+
+    public CourseInfoAdapter(MaterialItemClickListener materialItemClickListener) {
+        this.materialItemClickListener = materialItemClickListener;
+    }
 
     @NonNull
     @Override
@@ -30,7 +35,7 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<CourseInfoAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.onBind(materials.get(position));
+        holder.onBind(materials.get(position), materialItemClickListener);
     }
 
     @Override
@@ -54,8 +59,19 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<CourseInfoAdapter.Vi
             ButterKnife.bind(this, view);
         }
 
-        private void onBind(Material material) {
+        private void onBind(final Material material, final MaterialItemClickListener materialItemClickListener) {
             infoName.setText(material.getName());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    materialItemClickListener.onClick(material);
+                }
+            });
         }
+    }
+
+    public interface MaterialItemClickListener {
+
+        void onClick(Material material);
     }
 }
