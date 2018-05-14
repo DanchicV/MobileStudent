@@ -166,8 +166,8 @@ public class AllCoursesFragment extends BaseFragment implements AllCoursesContra
             String teacherFilter = ((TextView) teachersItemView).getText().toString();
             currentCourses = new ArrayList<>();
             for (Course course : allCourses) {
-                if ((courseFilter.equals(getString(R.string.all)) || courseFilter.equals(course.getName()))
-                        && (teacherFilter.equals(getString(R.string.all)) || teacherFilter.equals(course.getTeacherName()))) {
+                if ((courseFilter.equals(getString(R.string.all_courses)) || courseFilter.equals(course.getName()))
+                        && (teacherFilter.equals(getString(R.string.all_names)) || teacherFilter.equals(course.getTeacherName()))) {
                     currentCourses.add(course);
                 }
             }
@@ -231,9 +231,9 @@ public class AllCoursesFragment extends BaseFragment implements AllCoursesContra
         adapter.setCourses(courses);
 
         List<String> names = new ArrayList<>();
-        names.add(getString(R.string.all));
+        names.add(getString(R.string.all_courses));
         List<String> teachers = new ArrayList<>();
-        teachers.add(getString(R.string.all));
+        teachers.add(getString(R.string.all_names));
         for (Course course : courses) {
             names.add(course.getName());
             teachers.add(course.getTeacherName());

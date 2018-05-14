@@ -34,7 +34,8 @@
     <string name="course">Курс</string>
     <string name="materials">Дополнительные материалы</string>
     <string name="lectures">Лекции</string>
-    <string name="all">Все</string>
+    <string name="all_courses">Все названия</string>
+    <string name="all_names">Все имена</string>
 
     <!-- Edit profile screen -->
     <string name="editing">Редактирование</string>
